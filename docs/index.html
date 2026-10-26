@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wirkstoffe Chemie Trainer</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://alibenti95.github.io/strukturformeln-website/">
+  <link rel="icon" href="/strukturformeln-website/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/strukturformeln-website/css/style.css">
+  <script>
+    // Sprachweiche: die Sprache des Browsers entscheidet, Deutsch ist die Vorgabe. Ohne JavaScript
+    // bleibt die Liste darunter. Es wird nichts gespeichert und nichts übertragen.
+    (function () {
+      var codes = ["de", "en"];
+      var wanted = (navigator.languages || [navigator.language || ""]).map(function (l) { return l.toLowerCase(); });
+      var target = "de";
+      // erst die genaue Variante (es-mx), dann dieselbe Sprache (es → erste aktive es-…)
+      outer: for (var i = 0; i < wanted.length; i++) {
+        if (codes.indexOf(wanted[i]) >= 0) { target = wanted[i]; break; }
+        var primary = wanted[i].split("-")[0];
+        for (var j = 0; j < codes.length; j++) {
+          if (codes[j] === primary || codes[j].split("-")[0] === primary) { target = codes[j]; break outer; }
+        }
+      }
+      location.replace("/strukturformeln-website/" + target + "/");
+    })();
+  </script>
+</head>
+<body class="weiche">
+  <main class="rahmen weiche-innen">
+    <h1>Wirkstoffe Chemie Trainer</h1>
+    <ul class="weiche-liste">
+      <li><a href="/strukturformeln-website/de/" lang="de" hreflang="de">Deutsch</a></li>
+      <li><a href="/strukturformeln-website/en/" lang="en" hreflang="en">English</a></li>
+    </ul>
+    <p class="weiche-links weiche-recht"><a href="/strukturformeln-website/de/impressum/" lang="de">Impressum</a> · <a href="/strukturformeln-website/de/datenschutz/" lang="de">Datenschutz</a> · <a href="/strukturformeln-website/en/legal-notice/" lang="en">Legal notice</a> · <a href="/strukturformeln-website/en/privacy/" lang="en">Privacy</a></p>
+  </main>
+</body>
+</html>

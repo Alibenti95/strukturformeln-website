@@ -1,0 +1,4 @@
+.DS_Store
+__pycache__/
+# Interne Notizen, offene Fragen – nicht veröffentlichen
+_intern/

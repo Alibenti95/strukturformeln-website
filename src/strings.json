@@ -1,0 +1,34 @@
+{
+  "de": {
+    "skip": "Zum Inhalt springen",
+    "nav_home": "Start",
+    "nav_features": "Funktionen",
+    "nav_privacy": "Datenschutz",
+    "nav_legal": "Impressum",
+    "nav_support": "Support",
+    "language_label": "Sprache",
+    "footer_note": "Eine Lern-App für Wirkstoffstrukturen in der pharmazeutischen Chemie. Keine Cookies, kein Tracking.",
+    "footer_privacy_short": "Diese Website setzt keine Cookies und verwendet keine Analyse-Dienste.",
+    "appstore_pending": "Bald im App Store",
+    "appstore_ready": "Im App Store laden",
+    "appstore_pending_note": "Die App ist noch nicht veröffentlicht. Der Link folgt, sobald sie im App Store ist.",
+    "back_to_top": "Nach oben",
+    "last_updated": "Stand"
+  },
+  "en": {
+    "skip": "Skip to content",
+    "nav_home": "Home",
+    "nav_features": "Features",
+    "nav_privacy": "Privacy",
+    "nav_legal": "Legal notice",
+    "nav_support": "Support",
+    "language_label": "Language",
+    "footer_note": "A learning app for drug structures in medicinal chemistry. No cookies, no tracking.",
+    "footer_privacy_short": "This website sets no cookies and uses no analytics services.",
+    "appstore_pending": "Coming to the App Store",
+    "appstore_ready": "Download on the App Store",
+    "appstore_pending_note": "The app is not released yet. The link will appear once it is on the App Store.",
+    "back_to_top": "Back to top",
+    "last_updated": "Last updated"
+  }
+}

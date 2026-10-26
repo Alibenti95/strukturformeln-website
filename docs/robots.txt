@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alibenti95.github.io/strukturformeln-website/sitemap.xml

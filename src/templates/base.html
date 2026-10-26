@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{page_title}}</title>
+  <meta name="description" content="{{page_description}}">
+  <link rel="canonical" href="{{canonical}}">
+  {{alternates}}
+  <meta property="og:type" content="{{og_type}}">
+  <meta property="og:site_name" content="{{app_name}}">
+  <meta property="og:locale" content="{{locale}}">
+  <meta property="og:title" content="{{page_title}}">
+  <meta property="og:description" content="{{page_description}}">
+  <meta property="og:url" content="{{canonical}}">
+  <meta property="og:image" content="{{og_image}}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  {{verification}}
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#F4F0E8">
+  <link rel="icon" href="{{base}}/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="{{base}}/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="{{base}}/css/style.css">
+  {{structured_data}}
+</head>
+<body class="{{body_class}}">
+  <a class="skip" href="#inhalt">{{s_skip}}</a>
+  <header class="kopf">
+    <div class="rahmen kopf-innen">
+      <a class="marke" href="{{url_home}}" aria-label="{{app_name}}">
+        <svg class="marke-zeichen" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <polygon points="16,3 27.3,9.5 27.3,22.5 16,29 4.7,22.5 4.7,9.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+          <circle cx="16" cy="16" r="2.4" fill="currentColor"/>
+        </svg>
+        <span class="marke-name">{{app_name}}</span>
+      </a>
+      <nav class="navigation" aria-label="Hauptnavigation">
+        <a href="{{url_home}}">{{s_nav_home}}</a>
+        <a href="{{url_features}}">{{s_nav_features}}</a>
+        <a href="{{url_support}}">{{s_nav_support}}</a>
+        <a href="{{url_privacy}}">{{s_nav_privacy}}</a>
+      </nav>
+      <div class="sprachen" aria-label="{{s_language_label}}">{{language_switcher}}</div>
+    </div>
+  </header>
+
+  <main id="inhalt">
+{{content}}
+  </main>
+
+  <footer class="fuss">
+    <div class="rahmen">
+      <div class="fuss-spalten">
+        <div>
+          <p class="fuss-marke">{{app_name}}</p>
+          <p class="fuss-text">{{s_footer_note}}</p>
+        </div>
+        <nav class="fuss-links" aria-label="Rechtliches">
+          <a href="{{url_privacy}}">{{s_nav_privacy}}</a>
+          <a href="{{url_legal}}">{{s_nav_legal}}</a>
+          <a href="{{url_support}}">{{s_nav_support}}</a>
+        </nav>
+      </div>
+      <p class="fuss-klein">{{s_footer_privacy_short}} · {{s_language_label}}: {{language_switcher}}</p>
+    </div>
+  </footer>
+</body>
+</html>
