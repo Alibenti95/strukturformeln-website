@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{page_title}}</title>
   <meta name="description" content="{{page_description}}">
+  {{robots_meta}}
   <link rel="canonical" href="{{canonical}}">
   {{alternates}}
   <meta property="og:type" content="{{og_type}}">
@@ -19,8 +20,8 @@
   <meta name="twitter:card" content="summary_large_image">
   {{verification}}
   <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#F4F0E8">
-  <link rel="icon" href="{{base}}/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="icon" href="{{base}}/assets/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="{{base}}/assets/apple-touch-icon.png">
   <link rel="stylesheet" href="{{base}}/css/style.css">
   {{structured_data}}
@@ -30,10 +31,7 @@
   <header class="kopf">
     <div class="rahmen kopf-innen">
       <a class="marke" href="{{url_home}}" aria-label="{{app_name}}">
-        <svg class="marke-zeichen" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-          <polygon points="16,3 27.3,9.5 27.3,22.5 16,29 4.7,22.5 4.7,9.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
-          <circle cx="16" cy="16" r="2.4" fill="currentColor"/>
-        </svg>
+        <img class="marke-zeichen" src="{{base}}/assets/app-icon-64.png" width="32" height="32" alt="">
         <span class="marke-name">{{app_name}}</span>
       </a>
       <nav class="navigation" aria-label="Hauptnavigation">

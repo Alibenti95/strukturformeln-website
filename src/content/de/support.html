@@ -8,11 +8,44 @@ description: Hilfe zur App: Kontakt per E-Mail, Fehler melden und Antworten zu L
       <div class="rahmen textseite">
         <span class="etikett">Support</span>
         <h1>Fragen, Hinweise, Fehler</h1>
-        <p class="untertitel">Du erreichst uns per E-Mail.</p>
+        <p class="untertitel">Du erreichst uns per E-Mail oder über das <a href="#kontaktformular">Kontaktformular</a>.</p>
         <div class="held-aktionen" style="margin: 1.5rem 0 2.5rem">
           <a class="knopf knopf-haupt" href="{{support_mailto}}">E-Mail schreiben</a>
           <span class="appstore-hinweis"><code>{{support_email}}</code></span>
         </div>
+
+        <h2 id="kontaktformular">Kontaktformular</h2>
+        <p>Für Fragen, Fehlermeldungen und Datenschutzanfragen. Wir antworten an die E-Mail-Adresse, die du angibst.</p>
+        {{form_offen}}
+        <form class="formular" action="{{form_action}}" method="post" accept-charset="UTF-8">
+          <div class="feld">
+            <label for="kf-email">Deine E-Mail-Adresse</label>
+            <input id="kf-email" type="email" name="{{form_email_feld}}" required maxlength="254" autocomplete="email">
+          </div>
+          <div class="feld">
+            <label for="kf-anliegen">Anliegen</label>
+            <select id="kf-anliegen" name="anliegen" required>
+              <option value="" selected disabled>Bitte wählen</option>
+              <option value="Support">Support</option>
+              <option value="Fehlermeldung">Fehlermeldung</option>
+              <option value="Datenschutzanfrage">Datenschutzanfrage</option>
+            </select>
+          </div>
+          <div class="feld">
+            <label for="kf-nachricht">Nachricht</label>
+            <textarea id="kf-nachricht" name="nachricht" required minlength="10" maxlength="5000" rows="7"></textarea>
+            <p class="feld-hinweis">Bei einer Fehlermeldung hilft der Name des Wirkstoffs. Bitte keine Gesundheitsdaten oder andere sensible Angaben.</p>
+          </div>
+          <div class="honig" aria-hidden="true">
+            <label for="kf-honig">Dieses Feld bitte leer lassen</label>
+            <input id="kf-honig" type="text" name="{{form_honeypot_feld}}" tabindex="-1" autocomplete="off">
+          </div>
+          <input type="hidden" name="sprache" value="de">
+          <input type="hidden" name="{{form_weiterleitung_feld}}" value="{{site_url}}{{url_thanks}}">
+          {{form_zusatzfelder}}
+          <p class="feld-hinweis">Beim Absenden werden deine Angaben über den Formular-Dienst {{form_dienst}} an uns übermittelt. Mehr dazu in der <a href="{{url_privacy}}#kontaktformular">Datenschutzerklärung</a>.</p>
+          <button class="knopf knopf-haupt" type="submit">Nachricht senden</button>
+        </form>
 
         <h2>Rückmeldung zu einer Strukturformel oder Frage</h2>
         <p>Am schnellsten geht es direkt aus der App. An einer Karte wählst du „Fehler melden“; in den fünf Spielen steht „Frage melden“ in der Auflösung jeder Frage. Die App bereitet dann eine E-Mail mit allen Angaben vor, die wir zum Nachvollziehen brauchen – bei einer Spielfrage auch deine Antwort auf diese Frage. Du siehst den ganzen Text und sendest ihn selbst. Wenn du lieber hier schreibst: Nenne bitte den Wirkstoffnamen und beschreibe kurz, was nicht stimmt.</p>

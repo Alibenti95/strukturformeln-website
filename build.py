@@ -175,6 +175,8 @@ def main() -> None:
                 "privacy_date": privacy_date(lang),
                 "structured_data": "",
                 "body_class": meta.get("body_class", ""),
+                "robots_meta": '<meta name="robots" content="noindex">' if meta.get("robots") == "noindex" else "",
+                **contact_form(lang),
                 "verification": (f'<meta name="google-site-verification" content="{CONFIG["google_site_verification"]}">'
                                  if CONFIG.get("google_site_verification") else ""),
             }
@@ -199,6 +201,8 @@ def main() -> None:
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(html, encoding="utf-8")
 
+            if meta.get("robots") == "noindex":
+                continue  # z. B. die Bestätigungsseite des Kontaktformulars: nicht in die Sitemap
             sitemap_entries.append(sitemap_entry(canonical, today, [
                 (other, f"{url}{base}{page_path(other, pages[other][key][0]['slug'])}")
                 for other in langs if key in pages[other]
@@ -252,12 +256,36 @@ def main() -> None:
     if not CONFIG["appstore_url"]:
         print("Hinweis: appstore_url ist leer – die Seiten zeigen „bald im App Store“.")
     if placeholders:
-        print("Offene Angaben [[...]] – vor der Veröffentlichung ausfüllen (Fragen: OFFENE_FRAGEN.md):")
+        print("Offene Angaben [[...]] – vor der Veröffentlichung ausfüllen (Fragen: _intern/OFFENE_FRAGEN.md):")
         for group, where in sorted(placeholders.items()):
             label = f"Angabe {group}" if group else "ohne Nummer"
             print(f"  {label}: {', '.join(sorted(where))}")
     else:
         print("Keine Platzhalter mehr offen.")
+
+
+def contact_form(lang: str) -> dict:
+    """Variablen für das Kontaktformular (Supportseite). Ohne Dienst und Endpunkt bleibt das Formular ohne Ziel, und ein
+    Platzhalter sperrt die Veröffentlichung (Angabe 14)."""
+    import html as _html
+    cfg = CONFIG.get("kontaktformular", {})
+    endpoint, dienst = cfg.get("endpoint", "").strip(), cfg.get("dienst", "").strip()
+    subject = f"Kontaktformular {CONFIG['app_name']}"
+    hidden = "".join(
+        f'<input type="hidden" name="{_html.escape(name)}" value="{_html.escape(value.replace("{betreff}", subject))}">'
+        for name, value in cfg.get("zusatzfelder", {}).items())
+    open_text = {"de": "[[Angabe 14: Formular-Dienst einrichten – dienst und endpoint in site.config.json]]",
+                 "en": "[[Angabe 14: set up the form service – dienst and endpoint in site.config.json]]"}[lang]
+    ready = bool(endpoint and dienst)
+    return {
+        "form_action": _html.escape(endpoint) if ready else "",
+        "form_dienst": _html.escape(dienst) if ready else open_text,
+        "form_offen": "" if ready else f'<p class="formular-offen">{open_text}</p>',
+        "form_email_feld": cfg.get("email_feld", "email"),
+        "form_honeypot_feld": cfg.get("honeypot_feld", "_gotcha"),
+        "form_weiterleitung_feld": cfg.get("weiterleitung_feld", "_redirect"),
+        "form_zusatzfelder": hidden,
+    }
 
 
 MONTHS_EN = ["January", "February", "March", "April", "May", "June", "July", "August", "September",

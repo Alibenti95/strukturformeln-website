@@ -15,8 +15,18 @@
   "support_email": "wirkstoffe.support@icloud.com",
   "support_email_hinweis": "Offizielle Kontaktadresse für Support und Datenschutzanfragen; Impressum, Datenschutzerklärung und Supportseite lesen sie von hier. Muss mit SupportContact.emailAddress in der App übereinstimmen. Die Datenschutzerklärung nennt iCloud Mail (Apple) als E-Mail-Anbieter – bei einer Adresse eines anderen Anbieters dort Abschnitt 2.3 anpassen.",
 
-  "datenschutz_stand": "2026-10-26",
+  "datenschutz_stand": "2026-10-29",
   "datenschutz_stand_hinweis": "Tag der Veröffentlichung im Format JJJJ-MM-TT eintragen, z. B. 2026-11-02. Leer = Platzhalter, der Build meldet Angabe 13. Bei jeder inhaltlichen Änderung der Datenschutzerklärung neu setzen.",
+
+  "kontaktformular": {
+    "dienst": "Formspark",
+    "endpoint": "https://submit-form.com/IafR94Wre",
+    "email_feld": "email",
+    "honeypot_feld": "_gotcha",
+    "weiterleitung_feld": "_redirect",
+    "zusatzfelder": { "_email.subject": "{betreff}", "_append": "false" },
+    "hinweis": "Zweiter Kontaktweg nach § 5 DDG. dienst = Name des Formular-Dienstes wie in der Datenschutzerklärung, endpoint = Formular-Adresse aus dem Konto des Dienstes (z. B. https://submit-form.com/<ID>). Solange beides leer ist, meldet der Build Angabe 14 und die Website darf nicht veröffentlicht werden. Feldnamen hier für Formspark; für Formward zusatzfelder = { \"_subject\": \"{betreff}\" }. {betreff} wird ersetzt."
+  },
 
   "google_site_verification": "",
   "google_site_verification_hinweis": "Nur nötig, wenn die Search Console per HTML-Tag bestätigt wird: den content-Wert des Meta-Tags eintragen. Bei einer Domain-Property (DNS-TXT) leer lassen.",

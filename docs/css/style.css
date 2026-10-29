@@ -1,33 +1,35 @@
-/* Tafelwerk · Komposition – die Farben, Formen und Schriften der App (AppDesign.tafelwerk), für das Web.
-   Keine externen Schriften: Serife und Grundschrift kommen vom System (New York / SF auf Apple-Geräten). */
+/* Reinform – das Design der App (AppDesign.reinform, seit 28.10.2026), für das Web: Weiß und Schwarz, Linien von
+   1 px, keine Rundungen, keine Schatten; Farbe nur als Signal (Lernstände, richtig/falsch). Keine externen Schriften:
+   die Systemschrift (SF auf Apple-Geräten). Die Namen der Variablen stammen aus dem früheren Design und meinen Rollen. */
 
 :root {
-  --papier: #F4F0E8;
-  --flaeche: #FCFAF5;
+  --papier: #FFFFFF;
+  --flaeche: #FFFFFF;
   --karte: #FFFFFF;
-  --tinte: #1D1B18;
-  --tinte-2: #625B52;
-  --petrol: #184C55;
-  --petrol-dunkel: #163F47;
-  --petrol-hell: #1F535C;
-  --kante: #CFC3AE;
-  --linie: #D4C9B6;
-  --haarlinie: #E4DDD0;
-  --erfolg: #365C44;
-  --erfolg-flaeche: #DFE8DF;
-  --fehler: #7B3433;
-  --fehler-flaeche: #EDDCD8;
-  --stufe-neu: #C8C0B2;
-  --stufe-lernen: #C99A2E;
-  --stufe-wiederholen: #5E9C8E;
-  --stufe-gefestigt: #184C55;
-  --schatten: 0 6px 14px rgba(58, 46, 28, 0.18);
-  --radius-s: 6px;
-  --radius-m: 12px;
-  --radius-l: 14px;
-  --radius-xl: 18px;
-  --serif: "New York", "Iowan Old Style", "Palatino Linotype", Palatino, Charter, Georgia, "Times New Roman", serif;
+  --tinte: #000000;
+  --tinte-2: #5C5C5C;
+  --petrol: #000000;          /* Akzent: in Reinform schwarz */
+  --petrol-dunkel: #000000;
+  --petrol-hell: #000000;
+  --kante: #000000;
+  --linie: #000000;
+  --haarlinie: #000000;
+  --druck: rgba(0, 0, 0, 0.08);
+  --erfolg: #00C800;
+  --erfolg-flaeche: #00FF00;
+  --fehler: #FF0000;
+  --fehler-flaeche: #FF0000;
+  --stufe-neu: #B4B4B4;
+  --stufe-lernen: #FF8000;
+  --stufe-wiederholen: #0080FF;
+  --stufe-gefestigt: #000000;
+  --schatten: none;
+  --radius-s: 0;
+  --radius-m: 0;
+  --radius-l: 0;
+  --radius-xl: 0;
   --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: var(--sans);       /* Reinform hat keine Serife: Überschriften in der Grundschrift */
   --gutter: 16px;
   --breite: 1100px;
   color-scheme: light;
@@ -46,17 +48,15 @@ body {
   color: var(--tinte);
   background-color: var(--papier);
   /* das Raster eines Laborjournals, sehr leise */
-  background-image: linear-gradient(rgba(29, 27, 24, 0.035) 1px, transparent 1px);
-  background-size: 100% 2.6rem;
   -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4 {
   font-family: var(--serif);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.15;
   margin: 0 0 0.5em;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.01em;
   text-wrap: balance;
 }
 h1 { font-size: clamp(2rem, 1.4rem + 3vw, 3.4rem); }
@@ -66,7 +66,7 @@ h4 { font-size: 1.1rem; }
 p { margin: 0 0 1em; }
 a { color: var(--petrol); text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
 a:hover { color: var(--petrol-dunkel); }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--petrol); outline-offset: 3px; border-radius: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--petrol); outline-offset: 3px; }
 img, svg { max-width: 100%; height: auto; display: block; }
 ul, ol { padding-left: 1.3em; }
 li { margin-bottom: 0.35em; }
@@ -77,7 +77,7 @@ hr { border: 0; border-top: 1px solid var(--linie); margin: 2.5rem 0; }
 table { border-collapse: collapse; width: 100%; min-width: 36rem; font-size: 0.95rem; }
 th, td { text-align: left; vertical-align: top; padding: 0.55rem 0.6rem; border-bottom: 1px solid var(--haarlinie); }
 th { font-weight: 600; color: var(--tinte-2); font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase; }
-code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.92em; background: var(--flaeche); border: 1px solid var(--haarlinie); border-radius: 4px; padding: 0.05em 0.35em; }
+code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.92em; background: var(--flaeche); border: 1px solid var(--haarlinie); padding: 0.05em 0.35em; }
 
 .rahmen { width: 100%; max-width: var(--breite); margin: 0 auto; padding: 0 var(--gutter); }
 @media (min-width: 700px) { :root { --gutter: 28px; } }
@@ -111,14 +111,12 @@ mark.platzhalter::before { content: "⚠ "; }
 /* ---------- Kopf ---------- */
 .kopf {
   position: sticky; top: 0; z-index: 5;
-  background: rgba(244, 240, 232, 0.86);
-  backdrop-filter: saturate(140%) blur(10px);
-  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  background: #FFFFFF;
   border-bottom: 1px solid var(--linie);
 }
 .kopf-innen { display: flex; align-items: center; gap: 1rem 1.5rem; min-height: 3.6rem; flex-wrap: wrap; padding-top: 0.5rem; padding-bottom: 0.5rem; }
 .marke { display: inline-flex; align-items: center; gap: 0.55rem; text-decoration: none; color: var(--tinte); margin-right: auto; }
-.marke-zeichen { width: 1.75rem; height: 1.75rem; color: var(--petrol); flex: none; }
+.marke-zeichen { width: 2rem; height: 2rem; flex: none; border: 1px solid var(--kante); background: #FFFFFF; }
 .marke-name { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; letter-spacing: -0.01em; }
 .navigation { display: flex; gap: 0.2rem 1.1rem; flex-wrap: wrap; font-size: 0.98rem; }
 .navigation a { color: var(--tinte); text-decoration: none; padding: 0.2rem 0; border-bottom: 1.5px solid transparent; }
@@ -147,7 +145,7 @@ section + section { border-top: 1px solid var(--linie); }
 .held .untertitel { font-size: clamp(1.1rem, 1rem + 0.6vw, 1.35rem); color: var(--tinte-2); max-width: 36rem; }
 .held-linie { width: 56px; height: 1px; background: var(--linie); margin: 1.25rem 0 1.5rem; }
 .held-fakten { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; padding: 0; margin: 0 0 1.75rem; list-style: none; color: var(--tinte-2); font-size: 0.95rem; }
-.held-fakten li::before { content: "·"; color: var(--petrol); font-weight: 700; margin-right: 0.5rem; }
+.held-fakten li::before { content: ""; display: inline-block; width: 0.45rem; height: 0.45rem; background: var(--tinte); margin-right: 0.55rem; vertical-align: 0.12em; }
 .held-aktionen { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: center; }
 .held-bild { display: flex; justify-content: center; }
 .held-bild .geraet { width: min(300px, 78vw); }
@@ -161,12 +159,12 @@ section + section { border-top: 1px solid var(--linie); }
 }
 .knopf-haupt {
   color: #fff;
-  background: linear-gradient(var(--petrol-hell), var(--petrol-dunkel));
-  box-shadow: inset 0 0 0 2px var(--petrol-dunkel), inset 0 0 0 3px rgba(255, 255, 255, 0.35);
+  background: var(--tinte);
+  border-color: var(--tinte);
 }
-.knopf-haupt:hover { color: #fff; filter: brightness(1.06); }
+.knopf-haupt:hover { color: #fff; background: #2A2A2A; }
 .knopf-neben { color: var(--tinte); border-color: var(--tinte); background: transparent; }
-.knopf-neben:hover { background: rgba(29, 27, 24, 0.05); color: var(--tinte); }
+.knopf-neben:hover { background: var(--druck); color: var(--tinte); }
 .knopf[aria-disabled="true"] { cursor: default; opacity: 0.6; filter: none; }
 .appstore-hinweis { font-size: 0.88rem; color: var(--tinte-2); margin: 0; }
 
@@ -174,13 +172,12 @@ section + section { border-top: 1px solid var(--linie); }
 .geraet {
   position: relative;
   aspect-ratio: 1206 / 2622;
-  border-radius: 10.5% / 4.85%;
+  border-radius: 0;
   padding: 2.8%;
-  background: #1D1B18;
-  box-shadow: var(--schatten), 0 0 0 1px rgba(29, 27, 24, 0.5);
+  background: #000000;
   overflow: hidden;
 }
-.geraet img { width: 100%; height: 100%; object-fit: cover; border-radius: 8.5% / 3.9%; background: var(--papier); }
+.geraet img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; background: var(--papier); }
 
 /* ---------- Tafel: eine Strukturformel aus der App auf der Zeichenfläche ---------- */
 .tafel {
@@ -193,7 +190,7 @@ section + section { border-top: 1px solid var(--linie); }
   padding: 1rem 1rem 0.85rem;
 }
 .tafel img { width: 100%; height: auto; }
-.tafel figcaption { text-align: center; font-family: var(--serif); font-size: 1.05rem; color: var(--tinte-2); margin-top: 0.35rem; }
+.tafel figcaption { text-align: center; font-weight: 600; font-size: 1rem; color: var(--tinte); margin-top: 0.35rem; }
 .zweispaltig .tafel { margin: 0 auto; }
 
 /* ---------- Karten / Panels ---------- */
@@ -201,7 +198,7 @@ section + section { border-top: 1px solid var(--linie); }
 @media (min-width: 640px) { .karten { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 980px) { .karten-3 { grid-template-columns: repeat(3, 1fr); } }
 .karte {
-  background: rgba(252, 250, 245, 0.86);
+  background: #FFFFFF;
   border: 1px solid var(--kante);
   border-radius: var(--radius-l);
   padding: 1.4rem 1.4rem 1.1rem;
@@ -219,10 +216,9 @@ section + section { border-top: 1px solid var(--linie); }
 @media (min-width: 900px) { .spiele { grid-template-columns: repeat(2, 1fr); } }
 .spiel {
   display: grid; grid-template-columns: minmax(96px, 30%) 1fr; gap: 1.25rem; align-items: start;
-  background: rgba(252, 250, 245, 0.86); border: 1px solid var(--kante); border-radius: var(--radius-l);
+  background: #FFFFFF; border: 1px solid var(--kante); border-radius: var(--radius-l);
   padding: 1.25rem; box-shadow: var(--schatten);
 }
-.spiel .geraet { box-shadow: 0 3px 8px rgba(58, 46, 28, 0.16), 0 0 0 1px rgba(29, 27, 24, 0.5); }
 .spiel > :only-child { grid-column: 1 / -1; }
 .spiel h3 { margin-top: 0; }
 .spiel p { color: var(--tinte-2); margin-bottom: 0.5em; }
@@ -237,7 +233,7 @@ section + section { border-top: 1px solid var(--linie); }
 /* ---------- Stufen / Lernplan ---------- */
 .stufen { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; list-style: none; padding: 0; margin: 1rem 0; font-size: 0.95rem; }
 .stufen li { display: inline-flex; align-items: center; gap: 0.5rem; }
-.stufen i { width: 0.7rem; height: 0.7rem; border-radius: 50%; display: inline-block; }
+.stufen i { width: 0.7rem; height: 0.7rem; display: inline-block; }
 .stufe-neu i { background: var(--stufe-neu); }
 .stufe-lernen i { background: var(--stufe-lernen); }
 .stufe-wiederholen i { background: var(--stufe-wiederholen); }
@@ -256,10 +252,25 @@ section + section { border-top: 1px solid var(--linie); }
 /* ---------- Hinweiskasten ---------- */
 .hinweis {
   border: 1px solid var(--kante); border-left: 4px solid var(--petrol);
-  background: rgba(252, 250, 245, 0.86); border-radius: var(--radius-s);
+  background: #FFFFFF; border-radius: var(--radius-s);
   padding: 1rem 1.25rem; margin: 1.5rem 0;
 }
 .hinweis p:last-child { margin-bottom: 0; }
+
+/* ---------- Kontaktformular ---------- */
+.formular { display: grid; gap: 1.1rem; margin: 1.25rem 0 2.5rem; padding: 1.4rem; background: #FFFFFF;
+  border: 1px solid var(--kante); border-radius: var(--radius-l); box-shadow: var(--schatten); }
+.formular .feld { display: grid; gap: 0.35rem; }
+.formular label { font-weight: 600; font-size: 0.95rem; }
+.formular input, .formular select, .formular textarea {
+  width: 100%; font: inherit; color: var(--tinte); background: var(--karte);
+  border: 1px solid var(--kante); border-radius: var(--radius-s); padding: 0.65rem 0.75rem; }
+.formular textarea { resize: vertical; min-height: 9rem; }
+.formular input:focus-visible, .formular select:focus-visible, .formular textarea:focus-visible { outline: 2px solid var(--petrol); outline-offset: 1px; }
+.formular .feld-hinweis { font-size: 0.88rem; color: var(--tinte-2); margin: 0; }
+.formular button { justify-self: start; }
+.honig { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.formular-offen { margin: 0.5rem 0 0; }
 
 /* ---------- Textseiten ---------- */
 .textseite { max-width: 46rem; }
@@ -275,7 +286,7 @@ section + section { border-top: 1px solid var(--linie); }
 .aufruf .held-aktionen { justify-content: center; }
 
 /* ---------- Fuß ---------- */
-.fuss { border-top: 1px solid var(--linie); padding: 2.5rem 0 2rem; background: rgba(252, 250, 245, 0.5); font-size: 0.95rem; }
+.fuss { border-top: 1px solid var(--linie); padding: 2.5rem 0 2rem; background: #FFFFFF; font-size: 0.95rem; }
 .fuss-spalten { display: grid; gap: 1.5rem; }
 @media (min-width: 700px) { .fuss-spalten { grid-template-columns: 1fr auto; } }
 .fuss-marke { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; margin-bottom: 0.25rem; }

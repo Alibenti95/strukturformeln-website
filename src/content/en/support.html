@@ -8,11 +8,44 @@ description: Help with the app: contact by e-mail, reporting errors and answers 
       <div class="rahmen textseite">
         <span class="etikett">Support</span>
         <h1>Questions, feedback, errors</h1>
-        <p class="untertitel">You can reach us by e-mail.</p>
+        <p class="untertitel">You can reach us by e-mail or through the <a href="#kontaktformular">contact form</a>.</p>
         <div class="held-aktionen" style="margin: 1.5rem 0 2.5rem">
           <a class="knopf knopf-haupt" href="{{support_mailto}}">Write an e-mail</a>
           <span class="appstore-hinweis"><code>{{support_email}}</code></span>
         </div>
+
+        <h2 id="kontaktformular">Contact form</h2>
+        <p>For questions, error reports and privacy requests. We reply to the e-mail address you enter.</p>
+        {{form_offen}}
+        <form class="formular" action="{{form_action}}" method="post" accept-charset="UTF-8">
+          <div class="feld">
+            <label for="kf-email">Your e-mail address</label>
+            <input id="kf-email" type="email" name="{{form_email_feld}}" required maxlength="254" autocomplete="email">
+          </div>
+          <div class="feld">
+            <label for="kf-anliegen">Topic</label>
+            <select id="kf-anliegen" name="anliegen" required>
+              <option value="" selected disabled>Please choose</option>
+              <option value="Support">Support</option>
+              <option value="Bug report">Error report</option>
+              <option value="Privacy request">Privacy request</option>
+            </select>
+          </div>
+          <div class="feld">
+            <label for="kf-nachricht">Message</label>
+            <textarea id="kf-nachricht" name="nachricht" required minlength="10" maxlength="5000" rows="7"></textarea>
+            <p class="feld-hinweis">For an error report, the name of the drug helps. Please do not include health data or other sensitive information.</p>
+          </div>
+          <div class="honig" aria-hidden="true">
+            <label for="kf-honig">Please leave this field empty</label>
+            <input id="kf-honig" type="text" name="{{form_honeypot_feld}}" tabindex="-1" autocomplete="off">
+          </div>
+          <input type="hidden" name="sprache" value="en">
+          <input type="hidden" name="{{form_weiterleitung_feld}}" value="{{site_url}}{{url_thanks}}">
+          {{form_zusatzfelder}}
+          <p class="feld-hinweis">When you submit, your details are sent to us via the form service {{form_dienst}}. See the <a href="{{url_privacy}}#kontaktformular">privacy policy</a> for details.</p>
+          <button class="knopf knopf-haupt" type="submit">Send message</button>
+        </form>
 
         <h2>Feedback on a structure or a question</h2>
         <p>The quickest way is directly from the app. On a card, choose “Report an error”; in the five games, “Report question” sits in the reveal of every question. The app then prepares an e-mail with everything we need to follow up – for a game question this includes your answer to that question. You see the whole text and send it yourself. If you prefer to write here: please name the drug and briefly describe what is wrong.</p>

@@ -26,12 +26,11 @@ SRC_IMG = ROOT / "src" / "img-src"
 OUT = ROOT / "src" / "assets"
 CONFIG = json.loads((ROOT / "site.config.json").read_text(encoding="utf-8"))
 
-PAPER = (244, 240, 232)
-SURFACE = (252, 250, 245)
-INK = (29, 27, 24)
-SECONDARY = (98, 91, 82)
-PETROL = (24, 76, 85)
-RULE = (212, 201, 182)
+# Reinform (AppDesign.reinform): Weiß, Schwarz, Grau für Nebentext – keine Rundungen, keine Schatten
+WHITE = (255, 255, 255)
+INK = (0, 0, 0)
+SECONDARY = (92, 92, 92)
+ICON_SRC = ROOT / "src" / "icon-src" / "app-icon-1024.png"
 
 WIDTHS = (402, 804)
 
@@ -43,12 +42,14 @@ OG_TEXT = {
 
 def font(name: str, size: int) -> ImageFont.FreeTypeFont:
     candidates = {
-        "serif": ["/System/Library/Fonts/NewYork.ttf", "/System/Library/Fonts/Supplemental/Georgia.ttf"],
         "sans": ["/System/Library/Fonts/Helvetica.ttc", "/System/Library/Fonts/Supplemental/Arial.ttf"],
+        "sans-bold": ["/System/Library/Fonts/Helvetica.ttc", "/System/Library/Fonts/Supplemental/Arial Bold.ttf"],
     }[name]
     for path in candidates:
         if Path(path).exists():
-            return ImageFont.truetype(path, size)
+            # Helvetica.ttc: Schnitt 1 = Bold
+            index = 1 if name == "sans-bold" and path.endswith("Helvetica.ttc") else 0
+            return ImageFont.truetype(path, size, index=index)
     return ImageFont.load_default()
 
 
@@ -67,24 +68,6 @@ def screenshots() -> None:
             print(f"  {target.name}: {scaled.width}×{scaled.height}, {target.stat().st_size // 1024} KB")
 
 
-def rounded_device(screen: Image.Image, height: int) -> Image.Image:
-    """Ein Bildschirmfoto in einem schlichten dunklen Rahmen mit runden Ecken – kein Produktbild."""
-    scale = height / screen.height
-    screen = screen.resize((round(screen.width * scale), height), Image.LANCZOS)
-    border = max(8, round(height * 0.012))
-    radius = round(height * 0.085)
-    frame = Image.new("RGBA", (screen.width + 2 * border, screen.height + 2 * border), (0, 0, 0, 0))
-    mask = Image.new("L", frame.size, 0)
-    ImageDraw.Draw(mask).rounded_rectangle([0, 0, frame.width - 1, frame.height - 1], radius=radius, fill=255)
-    body = Image.new("RGBA", frame.size, (29, 27, 24, 255))
-    frame.paste(body, (0, 0), mask)
-    inner_mask = Image.new("L", screen.size, 0)
-    ImageDraw.Draw(inner_mask).rounded_rectangle([0, 0, screen.width - 1, screen.height - 1],
-                                                 radius=radius - border, fill=255)
-    frame.paste(screen, (border, border), inner_mask)
-    return frame
-
-
 def formula_image(name: str, width: int) -> Image.Image:
     """Eine Strukturformel aus src/assets (SVG aus den App-Daten) als Bitmap – über die Schnellansicht von macOS
     (qlmanage), ohne zusätzliche Abhängigkeit. Weißer Rand wird abgeschnitten."""
@@ -101,36 +84,35 @@ def formula_image(name: str, width: int) -> Image.Image:
 
 
 def og_images() -> None:
-    formula = formula_image("atorvastatin", 400)
+    formula = formula_image("atorvastatin", 420)
+    icon = Image.open(ICON_SRC).convert("RGB").resize((76, 76), Image.LANCZOS)
     for lang, (title, subtitle) in OG_TEXT.items():
-        canvas = Image.new("RGB", (1200, 630), PAPER)
+        canvas = Image.new("RGB", (1200, 630), WHITE)
         draw = ImageDraw.Draw(canvas)
-        # feine Linien wie das Raster eines Laborjournals
-        for y in range(0, 630, 42):
-            draw.line([(0, y), (1200, y)], fill=(236, 230, 219), width=1)
-        draw.rectangle([0, 0, 1199, 629], outline=RULE, width=2)
+        draw.rectangle([0, 0, 1199, 629], outline=INK, width=2)
 
-        # Tafel wie auf der Website: weiße Zeichenfläche, Kante, darauf die Formel
-        plate_w, plate_h = 460, formula.height + 80
+        # Tafel wie auf der Website: weiße Zeichenfläche mit schwarzer Linie, darauf die Formel
+        plate_w, plate_h = 480, formula.height + 80
         px, py = 1200 - plate_w - 70, (630 - plate_h) // 2
-        draw.rounded_rectangle([px + 4, py + 8, px + plate_w + 4, py + plate_h + 8], radius=22, fill=(226, 219, 205))
-        draw.rounded_rectangle([px, py, px + plate_w, py + plate_h], radius=22, fill=(255, 255, 255), outline=(207, 195, 174), width=2)
+        draw.rectangle([px, py, px + plate_w, py + plate_h], fill=WHITE, outline=INK, width=2)
         canvas.paste(formula, (px + (plate_w - formula.width) // 2, py + 40))
 
-        x, y = 80, 110
-        draw.text((x, y), CONFIG["app_name"], font=font("serif", 30), fill=PETROL)
-        y += 70
-        title_font = font("serif", 64)
-        for line in wrap(draw, title, title_font, 660):
+        x, y = 80, 96
+        canvas.paste(icon, (x, y))
+        draw.rectangle([x, y, x + 75, y + 75], outline=INK, width=2)
+        draw.text((x + 96, y + 22), CONFIG["app_name"], font=font("sans-bold", 30), fill=INK)
+        y += 124
+        title_font = font("sans-bold", 60)
+        for line in wrap(draw, title, title_font, 600):
             draw.text((x, y), line, font=title_font, fill=INK)
-            y += 76
-        y += 14
-        draw.line([(x, y), (x + 56, y)], fill=RULE, width=2)
+            y += 72
+        y += 18
+        draw.line([(x, y), (x + 56, y)], fill=INK, width=2)
         y += 30
-        sub_font = font("sans", 28)
-        for line in wrap(draw, subtitle, sub_font, 640):
+        sub_font = font("sans", 27)
+        for line in wrap(draw, subtitle, sub_font, 560):
             draw.text((x, y), line, font=sub_font, fill=SECONDARY)
-            y += 38
+            y += 37
         target = OUT / f"og-{lang}.jpg"
         canvas.save(target, "JPEG", quality=88, optimize=True)
         print(f"  {target.name}: {target.stat().st_size // 1024} KB")
@@ -151,18 +133,12 @@ def wrap(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont, wid
 
 
 def touch_icon() -> None:
-    size = 180
-    icon = Image.new("RGB", (size, size), PAPER)
-    draw = ImageDraw.Draw(icon)
-    import math
-    cx, cy, r = size / 2, size / 2, size * 0.32
-    points = [(cx + r * math.cos(math.radians(60 * i - 90)), cy + r * math.sin(math.radians(60 * i - 90)))
-              for i in range(6)]
-    draw.polygon(points, outline=PETROL, width=9)
-    draw.ellipse([cx - 9, cy - 9, cx + 9, cy + 9], fill=PETROL)
-    target = OUT / "apple-touch-icon.png"
-    icon.save(target, "PNG", optimize=True)
-    print(f"  {target.name}")
+    """Symbole aus dem App-Symbol: Home-Bildschirm (180), Favicon (48), Marke im Seitenkopf (64 = 32 pt @2x)."""
+    icon = Image.open(ICON_SRC).convert("RGB")
+    for name, size in (("apple-touch-icon.png", 180), ("favicon-48.png", 48), ("app-icon-64.png", 64)):
+        target = OUT / name
+        icon.resize((size, size), Image.LANCZOS).save(target, "PNG", optimize=True)
+        print(f"  {target.name}")
 
 
 if __name__ == "__main__":
