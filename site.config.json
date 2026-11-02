@@ -15,7 +15,7 @@
   "support_email": "wirkstoffe.support@icloud.com",
   "support_email_hinweis": "Offizielle Kontaktadresse für Support und Datenschutzanfragen; Impressum, Datenschutzerklärung und Supportseite lesen sie von hier. Muss mit SupportContact.emailAddress in der App übereinstimmen. Die Datenschutzerklärung nennt iCloud Mail (Apple) als E-Mail-Anbieter – bei einer Adresse eines anderen Anbieters dort Abschnitt 2.3 anpassen.",
 
-  "datenschutz_stand": "2026-11-01",
+  "datenschutz_stand": "2026-11-02",
   "datenschutz_stand_hinweis": "Tag der Veröffentlichung im Format JJJJ-MM-TT eintragen, z. B. 2026-11-02. Leer = Platzhalter, der Build meldet Angabe 13. Bei jeder inhaltlichen Änderung der Datenschutzerklärung neu setzen.",
 
   "kontaktformular": {
